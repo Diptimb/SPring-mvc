@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Travel Booking</title>
+<link href= 
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" > 
+    </script> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" > 
+    </script> 
+<style type="text/css">
+body{
+background-image: url(https://blog.socioon.com/wp-content/uploads/2018/11/most-beautiful-holiday-destinations.jpg);
+background-repeat: no-repeat;
+background-size: cover;}
+#main{
+      display: none;
+      text-align: center;
+      float:left;
+      width:400px;
+      margin-top: 10px;
+      margin-left: 90px;
+      margin-right: 90px;
+      height: 100px;
+      border-radius: 25px;
+      background-color: white;
+
+    }
+
+</style>
+</head>
+<body >
+<h1 style="color:white;text-align: center;border:2px solid white;margin-left:500px;margin-right: 500px;">Welcome</h1>
+<div id="main">
+ <input type="hidden" id ="hello" value="Enjoy Your holiday !!!">
+<h2 id="demo"></h2>
+<a href="/register"> <button >register</button></a> &nbsp;
+<a href="/travelbooking"><button>Travel booking</button></a> &nbsp;
+<a href="/booking"><button>Booking details</button> </a>
+</div>
+<script>
+class Hello {
+	  constructor(message) {
+	    this.message = message;
+	  }
+	}
+
+	hello = new Hello(document.getElementById("hello").value);
+
+	document.getElementById("demo").innerHTML = hello.message;
+$(document).ready(function () {
+
+	$("#main").slideToggle(2000);
+	$("#main").fadeTo(2000, 0.5);
+});
+
+</script>
+</body>
+</html>

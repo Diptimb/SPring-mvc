@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"><head>
+<title>sign up</title>
+<link href= 
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" > 
+    </script> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" > 
+    </script> 
+<style>.container {
+  padding: 20px;
+}
+.box{
+      display: block;
+      text-align: center;
+      border: 2px solid black;
+      margin-top: 10px;
+      margin-left: 120px;
+      margin-right: 120px;
+      height: 80px;
+      border-radius: 25px;
+      background-color: aliceblue;
+}
+	label{
+	 display: inline-block;
+  width: 200px;
+  text-align: left;}
+	
+input[type=text]{
+
+  width: 120%;
+  padding: 5px;
+  margin: 5px 5px 10x 10px;
+  border: none;
+  background: #f1f1f1;
+  
+}
+
+select{
+  width:125%;
+}
+.col
+{
+width:32%;
+height:89%;
+float:left;
+margin-left:2px;
+}
+#row
+{
+width:99%;
+height:40px;
+}
+#main
+{padding: 20px 0px 0px 0px;
+    width: 700px;
+ height:200px;
+margin-top:30px;
+margin-left:300px;
+box-shadow:1px 1px 1px 1px grey;
+background-color:white;
+        text-align:center;
+        font-weight:bold;
+		display: none;
+    background-attachment: fixed;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="box">
+    <h1>Ticket Booking Form</h1>
+  </div>
+  <div id="main" >
+  <form  th:action="@{/save}" th:object="${user}" method="post">
+<div id="row" style="color:black">
+<div id="row" style="color:black">
+<div class="col">Your Full Name</div>
+<div class="col"><input type="text" id="ln" autocomplete="off" placeholder="enter your full name" onblur="chkblnk('ln','error1')" onkeypress="return chkAplha(event,'error1')" th:field="*{fullName}"/></div>
+<div class="col" id="error1" style="color:red;margin-left: 20px;"></div>
+</div>
+<div id="row" style="color:black">
+  <div class="col">Age</div>
+  <div class="col">
+  <input  type="text" th:field="*{age}"  id="age"  autocomplete="off"  onblur="chkblnk('age','error2')"placeholder="enter your age"onFocus="value=''"/>  </div>
+  <div class="col" id="error2" style="color:red;margin-left: 20px;"></div>
+  </div>
+
+
+<button>Submit</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+function chkblnk(eid,errid)
+{
+var x=document.getElementById(eid).value;
+if(x=="")
+{
+document.getElementById(errid).innerHTML="please fill this field";
+}
+else
+{
+document.getElementById(errid).innerHTML="";
+}
+}
+
+function chkAplha(event,err)
+{
+if(!((event.which>=65 && event.which<=90) || (event.which>=97 && event.which<=122) || event.which==0 || event.which==8))
+{
+document.getElementById(err).innerHTML="invalid name format";
+return false;
+}
+}
+
+
+
+   $(function(){
+	   $("#age").mousemove(function () {
+               var res = document.getElementById("age").value;
+
+               if (res<18){
+                document.getElementById("error2").innerHTML="invalid age";}
+                else{
+                  document.getElementById("error2").innerHTML="";
+}
+           })
+           
+  }); 
+
+  $(document).ready(function(){
+  $("#main").slideToggle("slow");
+  document.getElementById("age").defaultValue = "";
+});
+$(document).ready(function(){
+  $("body").css({"background-image":"url(https://c.ekstatic.net/ecl/aircraft-exterior/airbus-A380/view-of-emirates-a380-flying-in-vibrant-sky-w1920x480.jpg?h=fvIuTfv8ti9Bdp-h9smTig)"})
+
+})
+
+</script>
+
+</body>
+
+</html>

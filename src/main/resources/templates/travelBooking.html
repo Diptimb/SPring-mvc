@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Travel Booking </title>
+<link href= 
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" > 
+    </script> 
+      
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" > 
+    </script> 
+<style>
+.container {
+  padding: 20px;
+}
+body{margin-bottom:30px;}
+	label{
+	 display: inline-block;
+  width: 200px;
+  text-align: left;}
+	
+input[type=text],select{
+
+  width: 100%;
+  padding: 5px;
+  margin: 5px 5px 10x 10px;
+  border: none;
+  background: #f1f1f1;
+  
+}
+label{
+	 display: inline-block;
+  text-align: left;}
+select{
+  width:125%;
+}
+input[type=radio] {
+ align-items: left-side;
+  margin-top: -1px;
+  vertical-align: right;
+}
+.col
+{
+width:32%;
+height:89%;
+float:left;
+margin-left:2px;
+}
+#row
+{
+width:99%;
+height:40px;
+}
+#main
+{
+    width: 1000px;
+ height:550px;
+margin-top:50px;
+margin-left:10px;
+float:left;
+box-shadow:1px 1px 1px 1px grey;
+background-color:white;
+        text-align:center;
+        font-weight:bold;
+        display:none;
+}
+h1{
+padding: 100px 0px 0px 0px;
+text-align: center;}
+</style>
+
+</head>
+<body>
+<div id="main">
+<h1>Travel Booking</h1>
+<div id="row" style="color:black">
+<div class="col">User</div>
+<div class="col"><select id="userselect" name="userselected" onclick="return user()" required="required">
+                  <option>Select One id</option>
+                  <option th:each="user :${users}" th:value="${user.getId()}"th:text="${user.getId()}"></option></select>	 </div>
+<div class="col" id="error" style="color:red;margin-left: 20px;"></div>
+</div>
+<div id="row" style="color:black">
+<div class="col">From</div>
+<div class="col"><select id="sourceselect" name="fromselected" onclick="return source()" required="required">
+                  <option>Select One Source</option>
+                  <option th:each="source :${sources}" th:value="${source}"th:text="${source}"></option></select></div>
+<div class="col" id="error1" style="color:red;margin-left: 20px;"></div>
+</div>
+<div id="row" style="color:black">
+<div class="col">To</div>
+<div class="col">
+<select id="destinationselect" name="toselected" onmouseover="return destination()" onclick="checkDestination()"required>
+                  <option>Select One destination</option>
+                  <option th:each="destination :${destinations}" th:value="${destination}"th:text="${destination}"></option></select></div>
+<div class="col" id="error2" style="color:red;margin-left: 25px;"></div>
+</div>
+<div id="row" style="color:black">
+  <div class="col">Date</div>
+  <div class="col"><input type="text" id="date1" name="date" autocomplete="off" onblur="chkblnk('date1','error12')" required="required" /></div>
+  <div class="col" id="error12" style="color:red ;margin-left: 20px;"></div>
+  </div>
+ 
+ <div id="row" style="color:black">
+  <div class="col">Food Preferences</div>
+       <form style="float:left;"> <div style="padding-top: 10px;">
+          <input type="radio" name="food" value="vegeterian" required><label >Vegeterian</label><br>
+      </div>
+	  <div style="padding-top: 10px;">
+     
+          <input type="radio" name="food"value="non-vegeterian"><label >Non-vegeterian</label><br>
+     </div></form>
+     </div>
+     <div id="row" style="color:black"></div>
+     <div id="row" style="color:black">
+  <div class="col">Travelling with</div>
+       <form style="float:left;"> <div style="padding-top: 10px;">
+          <input type="checkbox" name="travelling" value="Passport" required><label >Passport</label><br>
+      </div>
+	  <div style="padding-top: 10px;">
+     
+          <input type="checkbox" name="travelling"value="Visa"><label >Visa</label><br>
+     </div></form>
+     </div>
+     <div id="row" style="color:black">
+     <div id="row" style="color:black"></div>
+     <div class="col"></div>
+     <div class="col">
+    <form method="post" action="/saveDetail"
+			onmouseover="return foodAssignMethod()" name="form">
+			<input type="hidden" name="indexes" id="indexes" />
+			<input type="submit" value="Submit" id="submitBtn"/>
+
+		</form></div>
+	 
+	  
+  
+<script type="text/javascript">
+$(document).ready(function() { 
+    
+    $(function() { 
+        $( "#date1" ).datepicker({
+          minDate: '0d' ,
+  dateFormat: 'dd/mm/yy'
+        })
+    }); 
+}) 
+function chkblnk(eid,errid)
+{
+var x=document.getElementById(eid).value;
+if(x=="")
+{
+document.getElementById(errid).innerHTML="please fill this field";
+}
+else
+{
+document.getElementById(errid).innerHTML="";
+}
+
+}
+
+
+function user(){
+	var u=document.getElementById("userselect").value;
+	console.log(u);
+	var a=()=>{if(u=="Select One id"){
+		return "please select an id";
+	}
+	else{
+		return "";
+	}}
+	document.getElementById("error").innerHTML=a();
+}
+function source(){
+	var p=document.getElementById("sourceselect").value;
+	console.log(p);
+	if(p=="Select One Source"){
+		document.getElementById("error1").innerHTML="please select a source";
+		return false;
+	}
+	else{
+		document.getElementById("error1").innerHTML="";
+		return true;
+	}
+}
+function destination(){
+	var v=document.getElementById("destinationselect").value;
+	console.log(v);
+	if(v=="Select One destination"){
+		document.getElementById("error2").innerHTML="destination required";
+		return false;
+	}
+	else{
+		document.getElementById("error2").innerHTML="";
+		return true;
+	}
+}
+
+$(document).ready(function () {
+	$("#main").slideToggle(2000);
+	$("#main").fadeTo(2000, 0.8);
+	$("body").css({ "background-image": "url(https://userscontent2.emaze.com/images/b32ffb35-1100-4a65-8915-b1c8e4ba529a/48e2742fcbbf1a5c9b91379950c250d7.jpg)", "background-repeat": "no-repeat", "background-size": "cover" })
+
+})
+function foodAssignMethod() {
+            var checkValue= document.querySelector('input[name = "food"]:checked').value;
+             console.log(checkValue);
+             var values=travelAssignMethod();
+             values.push(checkValue);
+            var user=document.getElementById("userselect").value;
+             console.log(user);
+             values.push(user);
+            var source=document.getElementById("sourceselect").value;
+            console.log(source);
+            values.push(source);
+            var destination=document.getElementById("destinationselect").value;
+             values.push(destination); 
+             var date=document.querySelector('#date1').value; 
+             values.push(date); 
+             console.log(values.length);
+             document.getElementById('indexes').value = values;
+             return true;
+             }
+function travelAssignMethod() {
+    var checkboxes=document.querySelectorAll('input[name=travelling]:checked');
+    console.log(checkboxes);
+   	 var checkboxesChecked = [];
+   
+    for (var i=0; i<checkboxes.length; i++) {
+    	if (checkboxes[i].checked){
+          checkboxesChecked.push(checkboxes[i].value);}
+
+       }
+ 
+    return checkboxesChecked.length > 0 ? checkboxesChecked : null;
+}
+
+        
+	   function checkDestination(){
+		   var res = document.getElementById("sourceselect").value;
+           var dest=document.getElementById("destinationselect").value;
+           if(res===dest){
+          	 document.getElementById("error2").innerHTML="destination is same as source";
+           }
+           else{
+          	 document.getElementById("error2").innerHTML="";
+           }   
+	   }
+</script>
+</body>
+</html>
